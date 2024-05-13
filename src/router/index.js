@@ -1,23 +1,17 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// Import the necessary dependencies for Vue and Router
+import { createRouter, createWebHistory } from 'vue-router' 
+import MovieView from '../views/MovieView.vue' // Import the main view for the movie App
 
+// Set up the router
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
+      path: "/", // path
+      name: "home", // name
+      component: MovieView, //Component
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
-  ]
-})
+  ],
+});
 
 export default router
