@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
 import MovieItem from "./MovieItem.vue";
 
 // Movies array, input and messages
@@ -8,24 +8,39 @@ const title = ref("");
 const grade = ref("");
 const message = ref("");
 
-// Funktion to add a movie to the list
+// Load movies from the local storage
+onMounted(() => {
+    const storedMovies = localStorage.getItem('movies');
+    if (storedMovies) {
+        movies.value = JSON.parse(storedMovies);
+    }
+});
+
+// Watch the movies array and store in local storage
+watch(movies, (newMovies) => {
+    localStorage.setItem('movies', JSON.stringify(newMovies));
+}, { deep: true });
+
+
+// Function to add a movie to the list
 function addMovie() {
     if (!title.value || !grade.value) {
-        Swal.fire("Please enter title and grade!"); 
+        Swal.fire("Please enter title and grade!");
         return;
     }
     movies.value.push({ title: title.value, grade: grade.value });
-    // Reset the title, grade and message
+    // Reset the title, grade, and message
     title.value = ""; 
     grade.value = "";
     message.value = "";
 }
 
-// function to delete a movie from the list
+// Function to delete a movie from the list
 function deleteMovie(index) {
     movies.value.splice(index, 1); // Remove movie by index from the list
 }
 </script>
+
 
 
 <template>
